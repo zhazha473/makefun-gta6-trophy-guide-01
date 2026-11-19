@@ -3,84 +3,103 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Platinum Atlas — GTA VI trophy guide &amp; tracker</title>
-<link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css">
+<title>Platinum Atlas — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="An offline guide and tracker for all 55 GTA VI PlayStation 5 trophies: official names, descriptions and grades, a checklist saved in the browser, a roadmap to the platinum, missable flags and a cited guide for every trophy.">
+<link rel="stylesheet" href="./style.css">
+<script type="module" src="./js/main.js"></script>
 </head>
 <body>
 <header class="masthead">
-  <div class="brand">
-    <p class="kicker">Grand Theft Auto VI · PlayStation 5 · 55 trophies</p>
+  <div class="masthead-inner">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
     <h1>Platinum Atlas</h1>
-    <p class="tagline">Every trophy, its official name and grade, a cited guide — and a roadmap to the platinum.</p>
-  </div>
-  <div class="progress" id="progress" aria-live="polite">
-    <p class="bigcount"><span id="earnedCount">0</span><span class="of"> / 55</span></p>
-    <p class="subcount" id="gradeCounts">Platinum 0/1 · Gold 0/2 · Silver 0/6 · Bronze 0/46</p>
-    <div class="platinumbar"><span id="platinumFill"></span></div>
-    <p class="platinumlabel" id="platinumLabel">Platinum progress: 0%</p>
+    <p class="tagline">Every trophy, its official name and description, a roadmap to the platinum, and a cited guide for each one — offline, in your browser.</p>
+    <div class="progress" id="progress" aria-live="polite">
+      <div class="progress-big"><span id="earned-count">0</span><span class="progress-of">/ 55 earned</span></div>
+      <div class="progress-bar" role="progressbar" aria-label="Trophies earned" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="progress-bar"><span id="progress-fill"></span></div>
+      <p class="progress-grades" id="grade-counts"></p>
+      <p class="progress-note" id="platinum-note"></p>
+    </div>
   </div>
 </header>
 
-<nav class="toolbar" aria-label="Guide controls">
-  <div class="tabs" role="tablist" aria-label="Views">
-    <button type="button" id="tabChecklist" data-view="checklist" role="tab" aria-selected="true">Checklist</button>
-    <button type="button" id="tabRoadmap" data-view="roadmap" role="tab" aria-selected="false">Roadmap to platinum</button>
-    <button type="button" id="tabMissables" data-view="missables" role="tab" aria-selected="false">Missables <span id="missableCount"></span></button>
-  </div>
-  <div class="filters">
-    <label class="search">Search <input id="search" type="search" placeholder="Trophy name or description…" autocomplete="off"></label>
-    <label>Kind
-      <select id="kind">
-        <option value="all">All kinds</option>
-        <option value="story">Story</option>
-        <option value="missable">Missable</option>
-        <option value="collectibles">Collectibles</option>
-        <option value="activities">Activities</option>
-        <option value="platinum">Platinum</option>
-      </select>
-    </label>
-    <label>Grade
-      <select id="grade">
-        <option value="all">All grades</option>
-        <option value="platinum">Platinum</option>
-        <option value="gold">Gold</option>
-        <option value="silver">Silver</option>
-        <option value="bronze">Bronze</option>
-      </select>
-    </label>
-    <label>Earned
-      <select id="earnedFilter">
-        <option value="all">All</option>
-        <option value="earned">Earned</option>
-        <option value="unearned">Not yet earned</option>
-      </select>
-    </label>
-    <label class="spoiler"><button type="button" id="spoilerToggle" aria-pressed="false" aria-label="Hide story trophies until earned">Hide story trophies</button></label>
-    <button type="button" id="nextUp" class="nextup">Next up →</button>
-    <button type="button" id="export">Export progress</button>
-    <label class="import">Import progress <input id="import" type="file" accept="application/json,.json"></label>
-  </div>
+<nav class="views" aria-label="Guide views">
+  <button type="button" class="view-tab is-active" data-view="tracker" id="tab-tracker">Tracker</button>
+  <button type="button" class="view-tab" data-view="roadmap" id="tab-roadmap">Roadmap to platinum</button>
+  <button type="button" class="view-tab" data-view="missables" id="tab-missables">Missables <span class="count-pill" id="missable-pill">18</span></button>
 </nav>
 
-<main class="ledger">
-  <section class="listcol" id="listcol" aria-label="Trophy list">
-    <p class="hint" id="viewHint"></p>
-    <div id="rows"></div>
-    <p class="empty" id="empty" hidden>No trophies match these filters.</p>
+<main class="layout">
+  <section class="ledger" id="view-tracker" aria-label="Trophy checklist">
+    <div class="controls">
+      <label class="search">
+        <span class="visually-hidden">Search trophies</span>
+        <input type="search" id="search" placeholder="Search name or description…" autocomplete="off">
+      </label>
+      <div class="filter-row" id="kind-filters" role="group" aria-label="Filter by kind">
+        <button type="button" class="chip is-active" data-kind="all">All kinds</button>
+        <button type="button" class="chip" data-kind="story">Story</button>
+        <button type="button" class="chip" data-kind="side">Side</button>
+        <button type="button" class="chip" data-kind="collectibles">Collectibles</button>
+        <button type="button" class="chip" data-kind="activities">Activities</button>
+        <button type="button" class="chip" data-kind="completion">Completion</button>
+      </div>
+      <div class="filter-row" id="grade-filters" role="group" aria-label="Filter by grade">
+        <button type="button" class="chip is-active" data-grade="all">All grades</button>
+        <button type="button" class="chip" data-grade="platinum">Platinum</button>
+        <button type="button" class="chip" data-grade="gold">Gold</button>
+        <button type="button" class="chip" data-grade="silver">Silver</button>
+        <button type="button" class="chip" data-grade="bronze">Bronze</button>
+      </div>
+      <div class="filter-row toggles">
+        <button type="button" class="chip" data-earned="unearned" id="filter-unearned">Unearned only</button>
+        <button type="button" class="chip" data-earned="earned" id="filter-earned">Earned only</button>
+        <button type="button" class="chip" data-missable="only" id="filter-missable">Missable only</button>
+        <label class="spoiler-toggle"><input type="checkbox" id="spoiler-toggle"> <span>Hide story spoilers</span></label>
+      </div>
+      <div class="action-row">
+        <button type="button" class="btn btn-next" id="next-up">Next up &darr;</button>
+        <button type="button" class="btn" id="export-btn">Export progress</button>
+        <button type="button" class="btn" id="import-btn">Import progress</button>
+        <input type="file" id="import-file" accept="application/json,.json" class="visually-hidden">
+        <span class="action-hint" id="import-status" role="status"></span>
+      </div>
+      <p class="controls-note" id="filter-summary" role="status"></p>
+    </div>
+    <ol class="checklist" id="checklist"></ol>
+    <p class="empty-note" id="empty-note" hidden>No trophies match these filters. Clear the search or pick another filter.</p>
   </section>
-  <aside class="rail" id="rail" aria-label="Roadmap rail">
+
+  <section class="ledger" id="view-roadmap" aria-label="Roadmap to the platinum" hidden>
+    <h2>Roadmap to the platinum</h2>
+    <p class="section-intro">Six stages, in the order to play them. Every stage is built from the official trophy descriptions: story chapters and missions first, then the side strands, then activities, then heat and heists, then money and the map — and 100% completion last, which unlocks the platinum.</p>
+    <div id="roadmap"></div>
+  </section>
+
+  <section class="ledger" id="view-missables" aria-label="Missable trophies" hidden>
+    <h2>Missable trophies — 18 to watch</h2>
+    <p class="section-intro">These trophies are tied to a story beat or a choice. The official descriptions do not say the moment can be replayed, so earn each one when it comes up instead of leaving it for later. Everything else in the list can be finished after the story, at your own pace.</p>
+    <div id="missables-list"></div>
+  </section>
+
+  <aside class="rail" aria-label="Roadmap at a glance">
     <h2>Roadmap rail</h2>
-    <p class="railnote">Six stages to the platinum, in the order to play them. A stage fills as you tick its trophies.</p>
-    <ol id="railStages"></ol>
-    <p class="railnote">Missable trophies are flagged <span class="flag">MISSABLE</span> — earn them while their moment is open. Guides say plainly where the official description does not pin a step down.</p>
-    <p class="railnote sources-note">Sources: the official trophy list as listed by <a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/" target="_blank" rel="noopener">Exophase</a> and <a href="https://psnprofiles.com/trophies/43531-grand-theft-auto-vi" target="_blank" rel="noopener">PSNProfiles</a>. Every guide is written in this entry's own words and cites its sources.</p>
+    <ol class="rail-stages" id="rail-stages"></ol>
+    <div class="rail-card">
+      <h3>How the guide is sourced</h3>
+      <p>Names, descriptions and grades are the official list as PlayStation publishes it, as listed by Exophase and PSNProfiles. Every guide is written in our own words and names its sources; where a step is not pinned down by the official description, the guide says so instead of inventing one.</p>
+      <p><a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/" target="_blank" rel="noopener">Exophase — GTA VI trophy list</a></p>
+      <p><a href="https://psnprofiles.com/trophies/43531-grand-theft-auto-vi" target="_blank" rel="noopener">PSNProfiles — GTA VI trophies</a></p>
+    </div>
+    <div class="rail-card">
+      <h3>Your progress stays yours</h3>
+      <p>Checks are saved in this browser only (localStorage). Export downloads a JSON file you can keep; import restores it. Nothing is sent anywhere — the guide works with the network off.</p>
+    </div>
   </aside>
 </main>
 
-<footer>
-  <p>Platinum Atlas — an offline guide and tracker. Progress is saved in this browser only (localStorage) and can be exported and imported as a file. No network is used at run time; source links open only if you follow them. No Rockstar Games logo or official artwork is used.</p>
+<footer class="colophon">
+  <p>Platinum Atlas — an offline, open guide for the 55 GTA VI PlayStation 5 trophies. Trophy names, descriptions and grades are PlayStation's official list; guides are original writing that cites its sources. No Rockstar Games logo, artwork or game imagery is used.</p>
 </footer>
-<script type="module" src="js/main.js"></script>
 </body>
 </html>
