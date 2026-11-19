@@ -1,0 +1,125 @@
+/* Platinum Atlas — a dark "night drive" ledger. Deep slate, amber gold, serif display count. */
+* { box-sizing: border-box; }
+:root {
+  --bg: #10141c;
+  --panel: #171d29;
+  --panel2: #1e2534;
+  --line: #2c3547;
+  --text: #e8e4d8;
+  --muted: #9aa3b2;
+  --amber: #e8a33d;
+  --amber-dim: #b57f2a;
+  --green: #7fc98a;
+  --red: #e0655f;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+html { background: var(--bg); }
+body {
+  margin: 0;
+  padding: 0 28px 32px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.45;
+}
+a { color: var(--amber); }
+a:hover { color: #f4bd66; }
+
+/* Masthead: brand left, big serif progress right. */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  padding: 10px 0 8px;
+  border-bottom: 2px solid var(--amber);
+}
+.kicker { margin: 0 0 4px; color: var(--amber); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+h1 { margin: 0; font-family: var(--serif); font-size: 34px; line-height: 1; letter-spacing: .01em; }
+.tagline { margin: 6px 0 0; color: var(--muted); max-width: 640px; white-space: nowrap; }
+.progress { text-align: right; min-width: 300px; }
+.bigcount { margin: 0; font-family: var(--serif); font-size: 42px; line-height: 1; }
+.bigcount .of { font-size: 20px; color: var(--muted); }
+.subcount { margin: 6px 0 8px; font-size: 12px; color: var(--muted); }
+.platinumbar { height: 8px; background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.platinumbar span { display: block; height: 100%; width: 0; background: var(--amber); }
+.platinumlabel { margin: 5px 0 0; font-size: 12px; color: var(--amber); }
+
+/* Toolbar: tabs + filters in one band. Sticky, so export/import stay in reach. */
+.toolbar { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 6px 0; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 8px; margin-bottom: 6px; }
+.tabs button {
+  background: var(--panel); color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer;
+}
+.tabs button[aria-selected="true"] { background: var(--amber); color: #171208; border-color: var(--amber); font-weight: 700; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+.filters label { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.filters input[type="search"], .filters select {
+  background: var(--panel); color: var(--text); border: 1px solid var(--line);
+  border-radius: 5px; padding: 5px 8px; font-size: 13px;
+}
+.filters input[type="search"] { width: 160px; }
+.filters button, .import {
+  background: var(--panel2); color: var(--text); border: 1px solid var(--line);
+  border-radius: 5px; padding: 6px 10px; font-size: 12px; cursor: pointer;
+}
+.filters button:hover, .import:hover { border-color: var(--amber); }
+#spoilerToggle[aria-pressed="true"] { background: var(--amber); color: #171208; border-color: var(--amber); font-weight: 700; }
+.nextup { background: var(--amber) !important; color: #171208 !important; border-color: var(--amber) !important; font-weight: 700; }
+.import input { display: none; }
+
+/* Ledger: checklist left, sticky roadmap rail right. */
+.ledger { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.hint { color: var(--muted); font-size: 12px; margin: 8px 0 6px; }
+.empty { color: var(--muted); padding: 24px 0; }
+
+/* Trophy rows: compact, dense, one guide open at a time. */
+.trophy { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); margin-bottom: 8px; overflow: hidden; }
+.trophy.earned { border-color: #3d5a40; background: #18231a; }
+.trophy-head { display: flex; gap: 10px; align-items: flex-start; padding: 5px 12px; cursor: pointer; }
+.trophy-head input[type="checkbox"] { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--amber); cursor: pointer; flex: none; }
+.trophy-main { flex: 1; min-width: 0; }
+.trophy-name { font-weight: 700; font-size: 14px; }
+.trophy.earned .trophy-name { color: var(--green); text-decoration: line-through; text-decoration-thickness: 1px; }
+.trophy-desc { color: var(--muted); font-size: 12.5px; }
+.trophy-tags { display: flex; gap: 6px; align-items: center; flex: none; padding-top: 2px; }
+.grade { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 4px; padding: 2px 7px; }
+.grade-platinum { color: #7fd4ff; border-color: #7fd4ff; }
+.grade-gold { color: #ffd76a; border-color: #ffd76a; }
+.grade-silver { color: #d7dce6; border-color: #d7dce6; }
+.grade-bronze { color: #d99a6c; border-color: #d99a6c; }
+.kind { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 2px 7px; text-transform: capitalize; }
+.flag { font-size: 11px; font-weight: 800; color: #fff; background: var(--red); border-radius: 4px; padding: 2px 7px; letter-spacing: .05em; }
+.guide { border-top: 1px solid var(--line); background: var(--panel2); padding: 6px 12px 8px 38px; }
+.guide h3 { margin: 0 0 2px; font-size: 12px; color: var(--amber); letter-spacing: .08em; text-transform: uppercase; }
+.guide p { margin: 0 0 4px; font-size: 12.5px; }
+.guide .miss { color: #f0a8a4; }
+.guide .stage { color: var(--muted); font-size: 12px; }
+.guide .stage a { margin-right: 12px; }
+
+/* Roadmap rail. */
+.rail { position: sticky; top: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.rail h2 { margin: 0 0 4px; font-family: var(--serif); font-size: 20px; }
+.railnote { color: var(--muted); font-size: 12px; margin: 8px 0; }
+#railStages { list-style: none; margin: 10px 0; padding: 0; }
+#railStages li { border-top: 1px solid var(--line); padding: 8px 0; cursor: pointer; }
+#railStages li:first-child { border-top: 0; }
+.rail-stage { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+.rail-stage .n { font-weight: 700; }
+.rail-stage .c { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.railbar { height: 5px; background: var(--panel2); border-radius: 3px; margin-top: 5px; overflow: hidden; }
+.railbar span { display: block; height: 100%; background: var(--amber); }
+
+/* Roadmap + missables views. */
+.stage-block { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); margin-bottom: 12px; padding: 12px 14px; }
+.stage-block h2 { margin: 0 0 2px; font-family: var(--serif); font-size: 20px; }
+.stage-block .stage-meta { color: var(--muted); font-size: 12px; margin: 0 0 10px; }
+.stage-block ol { margin: 0; padding-left: 20px; }
+.stage-block li { margin-bottom: 5px; font-size: 13px; }
+.stage-block li.earned { color: var(--green); }
+.miss-note { color: #f0a8a4; font-size: 12.5px; }
+
+footer { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 12px; color: var(--muted); font-size: 12px; max-width: 760px; }

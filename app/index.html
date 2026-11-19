@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platinum Atlas — GTA VI trophy guide &amp; tracker</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="brand">
+    <p class="kicker">Grand Theft Auto VI · PlayStation 5 · 55 trophies</p>
+    <h1>Platinum Atlas</h1>
+    <p class="tagline">Every trophy, its official name and grade, a cited guide — and a roadmap to the platinum.</p>
+  </div>
+  <div class="progress" id="progress" aria-live="polite">
+    <p class="bigcount"><span id="earnedCount">0</span><span class="of"> / 55</span></p>
+    <p class="subcount" id="gradeCounts">Platinum 0/1 · Gold 0/2 · Silver 0/6 · Bronze 0/46</p>
+    <div class="platinumbar"><span id="platinumFill"></span></div>
+    <p class="platinumlabel" id="platinumLabel">Platinum progress: 0%</p>
+  </div>
+</header>
+
+<nav class="toolbar" aria-label="Guide controls">
+  <div class="tabs" role="tablist" aria-label="Views">
+    <button type="button" id="tabChecklist" data-view="checklist" role="tab" aria-selected="true">Checklist</button>
+    <button type="button" id="tabRoadmap" data-view="roadmap" role="tab" aria-selected="false">Roadmap to platinum</button>
+    <button type="button" id="tabMissables" data-view="missables" role="tab" aria-selected="false">Missables <span id="missableCount"></span></button>
+  </div>
+  <div class="filters">
+    <label class="search">Search <input id="search" type="search" placeholder="Trophy name or description…" autocomplete="off"></label>
+    <label>Kind
+      <select id="kind">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="missable">Missable</option>
+        <option value="collectibles">Collectibles</option>
+        <option value="activities">Activities</option>
+        <option value="platinum">Platinum</option>
+      </select>
+    </label>
+    <label>Grade
+      <select id="grade">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label>Earned
+      <select id="earnedFilter">
+        <option value="all">All</option>
+        <option value="earned">Earned</option>
+        <option value="unearned">Not yet earned</option>
+      </select>
+    </label>
+    <label class="spoiler"><button type="button" id="spoilerToggle" aria-pressed="false" aria-label="Hide story trophies until earned">Hide story trophies</button></label>
+    <button type="button" id="nextUp" class="nextup">Next up →</button>
+    <button type="button" id="export">Export progress</button>
+    <label class="import">Import progress <input id="import" type="file" accept="application/json,.json"></label>
+  </div>
+</nav>
+
+<main class="ledger">
+  <section class="listcol" id="listcol" aria-label="Trophy list">
+    <p class="hint" id="viewHint"></p>
+    <div id="rows"></div>
+    <p class="empty" id="empty" hidden>No trophies match these filters.</p>
+  </section>
+  <aside class="rail" id="rail" aria-label="Roadmap rail">
+    <h2>Roadmap rail</h2>
+    <p class="railnote">Six stages to the platinum, in the order to play them. A stage fills as you tick its trophies.</p>
+    <ol id="railStages"></ol>
+    <p class="railnote">Missable trophies are flagged <span class="flag">MISSABLE</span> — earn them while their moment is open. Guides say plainly where the official description does not pin a step down.</p>
+    <p class="railnote sources-note">Sources: the official trophy list as listed by <a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/" target="_blank" rel="noopener">Exophase</a> and <a href="https://psnprofiles.com/trophies/43531-grand-theft-auto-vi" target="_blank" rel="noopener">PSNProfiles</a>. Every guide is written in this entry's own words and cites its sources.</p>
+  </aside>
+</main>
+
+<footer>
+  <p>Platinum Atlas — an offline guide and tracker. Progress is saved in this browser only (localStorage) and can be exported and imported as a file. No network is used at run time; source links open only if you follow them. No Rockstar Games logo or official artwork is used.</p>
+</footer>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
